@@ -31,7 +31,6 @@ export interface Log {
         timeZone?: string;
         zipCode?: string;
     };
-    ip?: string;
     googleTopics?: GoogleTopic[];
     instance: number;
     page: {

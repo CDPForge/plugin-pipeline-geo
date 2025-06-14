@@ -16,17 +16,19 @@ export default class MyPlugin implements PipelinePluginI {
     }
 
     elaborate(log: Log): Promise<Log | null> {
-        if (!log.ip) {
+        if (!log.device?.ip) {
             return Promise.resolve(log);
         }
 
         try {
-            const lookup = net.isIP(log.ip) === 4 ? this.ip2locationIPv4.getAll(log.ip) : this.ip2locationIPv6.getAll(log.ip);
-            
+            const lookup = net.isIP(log.device.ip) === 4 ?
+                this.ip2locationIPv4.getAll(log.device.ip) :
+                this.ip2locationIPv6.getAll(log.device.ip);
+
             if (!log.geo) {
                 log.geo = {};
             }
-            
+
             log.geo.zipCode = lookup?.zipCode;
             log.geo.country = lookup?.countryLong;
             log.geo.region = lookup?.region;
@@ -36,10 +38,10 @@ export default class MyPlugin implements PipelinePluginI {
                 type: 'Point',
                 coordinates: [Number(lookup?.longitude), Number(lookup?.latitude)]
             };
-            
+
             return Promise.resolve(log);
         } catch (error) {
-            console.error(`Error looking up IP ${log.ip}:`, error);
+            console.error(`Error looking up IP ${log.device.ip}:`, error);
             return Promise.resolve(log);
         }
     }
