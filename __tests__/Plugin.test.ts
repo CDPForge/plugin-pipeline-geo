@@ -73,12 +73,11 @@ describe('MyPlugin', () => {
         const log: Log = {
             client: 1,
             date: '2024-03-20',
-            device: { id: 'test-device' },
+            device: { id: 'test-device', ip: '8.8.8.8' },
             event: 'test-event',
             instance: 1,
             page: { title: 'test-page' },
             session: 'test-session',
-            ip: '8.8.8.8'
         };
 
         const result = await plugin.elaborate(log);
@@ -104,12 +103,11 @@ describe('MyPlugin', () => {
         const log: Log = {
             client: 1,
             date: '2024-03-20',
-            device: { id: 'test-device' },
+            device: { id: 'test-device', ip: '8.8.8.8' },
             event: 'test-event',
             instance: 1,
             page: { title: 'test-page' },
             session: 'test-session',
-            ip: '8.8.8.8'
         };
 
         const result = await plugin.elaborate(log);
@@ -152,12 +150,11 @@ describe('MyPlugin', () => {
         const log: Log = {
             client: 1,
             date: '2024-03-20',
-            device: { id: 'test-device' },
+            device: { id: 'test-device', ip: '2001:4860:4860::8888' },
             event: 'test-event',
             instance: 1,
             page: { title: 'test-page' },
             session: 'test-session',
-            ip: '2001:4860:4860::8888'
         };
 
         const result = await plugin.elaborate(log);
