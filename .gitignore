@@ -1,0 +1,6 @@
+node_modules
+.idx
+dist
+.vscode
+src/plugin/db/*
+!src/plugin/db/.gitkeep
