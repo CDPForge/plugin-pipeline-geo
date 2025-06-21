@@ -30,7 +30,7 @@ export default class PipelineSTage{
     async start(inputTopic: string, outputTopic: string | null = null): Promise<void> {
         this.input = inputTopic;
         this.output = outputTopic;
-        await this.currentOperation;
+        await this.currentOperation.then(() => this.plugin.init());
         this.currentOperation = this._start();
         return this.currentOperation;
     }

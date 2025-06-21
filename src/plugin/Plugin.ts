@@ -3,16 +3,19 @@ import { Log } from '../types';
 import { IP2Location } from 'ip2location-nodejs';
 import Config from "../config";
 import net from 'net';
+import fs from 'fs';
+import path from 'path';
 
 export default class MyPlugin implements PipelinePluginI {
     private ip2locationIPv4: IP2Location;
     private ip2locationIPv6: IP2Location;
-
+    private ipv4Path: string;
+    private ipv6Path: string;
     constructor() {
         this.ip2locationIPv4 = new IP2Location();
         this.ip2locationIPv6 = new IP2Location();
-        this.ip2locationIPv4.open(__dirname + `/db/${Config.getInstance().config.dbipv4}`);
-        this.ip2locationIPv6.open(__dirname + `/db/${Config.getInstance().config.dbipv6}`);
+        this.ipv4Path = path.join(__dirname, 'db', Config.getInstance().config.dbipv4);
+        this.ipv6Path = path.join(__dirname, 'db', Config.getInstance().config.dbipv6);
     }
 
     elaborate(log: Log): Promise<Log | null> {
@@ -44,5 +47,29 @@ export default class MyPlugin implements PipelinePluginI {
             console.error(`Error looking up IP ${log.device.ip}:`, error);
             return Promise.resolve(log);
         }
+    }
+
+    async init(): Promise<void> {
+        if (!fs.existsSync(this.ipv4Path)) {
+            fs.mkdirSync(path.dirname(this.ipv4Path), { recursive: true });
+            await this.downloadDatabase(Config.getInstance().config.dbDownloadUrl.replace('{DATABASE_CODE}', Config.getInstance().config.dbcode), this.ipv4Path);
+        }
+
+        if (!fs.existsSync(this.ipv6Path)) {
+            fs.mkdirSync(path.dirname(this.ipv6Path), { recursive: true });
+            await this.downloadDatabase(Config.getInstance().config.dbDownloadUrl.replace('{DATABASE_CODE}', Config.getInstance().config.dbcodeipv6), this.ipv6Path);
+        }
+        
+        this.ip2locationIPv4.open(this.ipv4Path);
+        this.ip2locationIPv6.open(this.ipv6Path);
+    }
+
+    async downloadDatabase(url: string, dest: string): Promise<void> {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Download fallito: ${response.statusText}`);
+        }
+        const buffer = await response.arrayBuffer();
+        fs.writeFileSync(dest, Buffer.from(buffer));
     }
 }

@@ -1,25 +1,20 @@
-import { Kafka } from 'kafkajs';
 import MyPlugin from './plugin/Plugin';
 import Config from './config';
 import PipelineStage from './PipelineStage';
 import RestEP from './RestEP';
 
+
 const stage = new PipelineStage(new MyPlugin());
 const restEP = new RestEP(async (body: { inputTopic: string, outputTopic: string | null }) => {
   await stage.restart(body.inputTopic, body.outputTopic);
 });
-const pluginRegistrationBody = {
-  name: Config.getInstance().config.pluginName,
-  priority: Config.getInstance().config.priority,
-  type: Config.getInstance().config.type,
-};
 
 fetch(`${Config.getInstance().config.pluginManagerUrl}/register`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify(pluginRegistrationBody),
+  body: JSON.stringify(Config.getInstance().config.plugin),
 }).then(res => {
   if (!res.ok) {
     throw new Error(`Failed to register plugin with Template Manager: ${res.statusText}`);
