@@ -3,7 +3,7 @@ kafkaConfig:
     - 'localhost:36357'
 
 plugin:
-  plugin_name: 'geoPlugin'
+  name: 'geoPlugin'
   priority: 1
   type: 'blocking'
   callback_url: 'http://localhost:3001/topics'
