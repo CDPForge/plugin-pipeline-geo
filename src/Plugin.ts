@@ -1,4 +1,4 @@
-import { PipelinePluginI, Log, Config } from 'plugin-pipeline-sdk';
+import { PipelinePluginI, Log, Config } from '@cdp-forge/plugin-pipeline-sdk';
 import { IP2Location } from 'ip2location-nodejs';
 import net from 'net';
 import fs from 'fs';
