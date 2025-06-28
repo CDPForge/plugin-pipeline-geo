@@ -2,15 +2,5 @@ kafkaConfig:
   brokers:
     - 'localhost:36357'
 
-plugin:
-  name: 'geoPlugin'
-  priority: 1
-  type: 'blocking'
-  callback_url: 'http://localhost:3001/topics'
-
 pluginManagerUrl: 'http://localhost:3000'
-dbipv4: 'IP2LOCATION-LITE-DB11.BIN'
-dbipv6: 'IP2LOCATION-LITE-DB11.IPV6.BIN'
-dbDownloadUrl: 'https://www.ip2location.com/download/?token=<your_token>&file={DATABASE_CODE}'
-dbcode: DB11LITEBIN
-dbcodeipv6: DB11LITEBINIPV6
+config_topic: 'config'

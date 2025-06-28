@@ -1,21 +1,21 @@
-import PipelinePluginI from "./PipelinePluginI";
-import { Log } from '../types';
+import { PipelinePluginI, Log, Config } from 'plugin-pipeline-sdk';
 import { IP2Location } from 'ip2location-nodejs';
-import Config from "../config";
 import net from 'net';
 import fs from 'fs';
 import path from 'path';
 
 export default class MyPlugin implements PipelinePluginI {
+    private config: Config;
     private ip2locationIPv4: IP2Location;
     private ip2locationIPv6: IP2Location;
     private ipv4Path: string;
     private ipv6Path: string;
-    constructor() {
+    constructor(config: Config) {
+        this.config = config;
         this.ip2locationIPv4 = new IP2Location();
         this.ip2locationIPv6 = new IP2Location();
-        this.ipv4Path = path.join(__dirname, 'db', Config.getInstance().config.dbipv4);
-        this.ipv6Path = path.join(__dirname, 'db', Config.getInstance().config.dbipv6);
+        this.ipv4Path = path.join(__dirname, 'db', config.dbipv4);
+        this.ipv6Path = path.join(__dirname, 'db', config.dbipv6);
     }
 
     elaborate(log: Log): Promise<Log | null> {
@@ -52,12 +52,12 @@ export default class MyPlugin implements PipelinePluginI {
     async init(): Promise<void> {
         if (!fs.existsSync(this.ipv4Path)) {
             fs.mkdirSync(path.dirname(this.ipv4Path), { recursive: true });
-            await this.downloadDatabase(Config.getInstance().config.dbDownloadUrl.replace('{DATABASE_CODE}', Config.getInstance().config.dbcode), this.ipv4Path);
+            await this.downloadDatabase(this.config.dbDownloadUrl.replace('{DATABASE_CODE}', this.config.dbcode), this.ipv4Path);
         }
 
         if (!fs.existsSync(this.ipv6Path)) {
             fs.mkdirSync(path.dirname(this.ipv6Path), { recursive: true });
-            await this.downloadDatabase(Config.getInstance().config.dbDownloadUrl.replace('{DATABASE_CODE}', Config.getInstance().config.dbcodeipv6), this.ipv6Path);
+            await this.downloadDatabase(this.config.dbDownloadUrl.replace('{DATABASE_CODE}', this.config.dbcodeipv6), this.ipv6Path);
         }
         
         this.ip2locationIPv4.open(this.ipv4Path);
