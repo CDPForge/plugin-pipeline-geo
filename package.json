@@ -1,5 +1,5 @@
 {
-    "name": "plugin-pipeline-geo",
+    "name": "@cdp-forge/plugin-pipeline-geo",
     "version": "1.0.0",
     "private": true,
     "main": "index.js",
