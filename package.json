@@ -13,7 +13,7 @@
     "author": "CDP Forge",
     "license": "GPL-3.0",
     "dependencies": {
-        "@cdp-forge/plugin-pipeline-sdk": "^1.1.4",
+        "@cdp-forge/plugin-pipeline-sdk": "^1.1.5",
         "ip2location-nodejs": "^9.6.3",
         "yaml": "^2.7.0"
     },
