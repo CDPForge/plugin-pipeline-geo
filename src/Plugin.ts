@@ -52,12 +52,19 @@ export default class MyPlugin implements PipelinePluginI {
     async init(): Promise<void> {
         if (!fs.existsSync(this.ipv4Path)) {
             fs.mkdirSync(path.dirname(this.ipv4Path), { recursive: true });
-            await this.downloadDatabase(this.config.dbDownloadUrl.replace('{DATABASE_CODE}', this.config.dbcode), this.ipv4Path);
+            await this.downloadDatabase(
+                this.config.dbDownloadUrl
+                    .replace('{DATABASE_CODE}', this.config.dbcode)
+                    .replace('{GEO_DBTOKEN}', this.config["geo-dbtoken"]),
+                this.ipv4Path);
         }
 
         if (!fs.existsSync(this.ipv6Path)) {
             fs.mkdirSync(path.dirname(this.ipv6Path), { recursive: true });
-            await this.downloadDatabase(this.config.dbDownloadUrl.replace('{DATABASE_CODE}', this.config.dbcodeipv6), this.ipv6Path);
+            await this.downloadDatabase(this.config.dbDownloadUrl
+                .replace('{DATABASE_CODE}', this.config.dbcodeipv6)
+                .replace('{GEO_DBTOKEN}', this.config["geo-dbtoken"]),
+                this.ipv6Path);
         }
         
         this.ip2locationIPv4.open(this.ipv4Path);

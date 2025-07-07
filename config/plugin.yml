@@ -5,6 +5,6 @@ plugin:
 
 dbipv4: 'IP2LOCATION-LITE-DB11.BIN'
 dbipv6: 'IP2LOCATION-LITE-DB11.IPV6.BIN'
-dbDownloadUrl: 'https://www.ip2location.com/download/?token=[rplace_with_ur_token]&file={DATABASE_CODE}'
+dbDownloadUrl: 'https://www.ip2location.com/download/?token={GEO_DBTOKEN}&file={DATABASE_CODE}'
 dbcode: DB11LITEBIN
 dbcodeipv6: DB11LITEBINIPV6
