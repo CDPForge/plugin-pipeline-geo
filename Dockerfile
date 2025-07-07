@@ -28,6 +28,12 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/dist/config ./config
 
+# Crea la directory db e imposta i permessi appropriati
+RUN mkdir -p /app/dist/db && chown -R node:node /app/dist
+
+# Passa all'utente non-root
+USER node
+
 # Espone la porta su cui il server Express ascolta
 EXPOSE 3000
 
