@@ -1,6 +1,6 @@
 {
     "name": "@cdp-forge/plugin-pipeline-geo",
-    "version": "1.0.0",
+    "version": "0.0.9",
     "private": true,
     "main": "index.js",
     "scripts": {
@@ -12,7 +12,7 @@
     "author": "CDP Forge",
     "license": "GPL-3.0",
     "dependencies": {
-        "@cdp-forge/plugin-pipeline-sdk": "^1.1.16",
+        "@cdp-forge/plugin-pipeline-sdk": "^1.1.17",
         "ip2location-nodejs": "^9.6.3",
         "yaml": "^2.7.0"
     },
