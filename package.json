@@ -7,12 +7,14 @@
         "test": "npx jest",
         "start": "node --inspect dist/index.js",
         "dev": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'npm run build && npm run start'",
-        "build": "tsc"
+        "build": "tsc",
+        "build_prod": "git push && git push --tags",
+        "prebuild_prod": "npm version patch"
     },
     "author": "CDP Forge",
     "license": "GPL-3.0",
     "dependencies": {
-        "@cdp-forge/plugin-pipeline-sdk": "^1.1.17",
+        "@cdp-forge/plugin-pipeline-sdk": "^1.1.18",
         "ip2location-nodejs": "^9.6.3",
         "yaml": "^2.7.0"
     },
