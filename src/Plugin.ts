@@ -5,17 +5,17 @@ import fs from 'fs';
 import path from 'path';
 
 export default class MyPlugin implements PipelinePluginI {
-    private config: Config;
+    private config: Config['plugin'];
     private ip2locationIPv4: IP2Location;
     private ip2locationIPv6: IP2Location;
-    private ipv4Path: string;
-    private ipv6Path: string;
-    constructor(config: Config) {
+    private readonly ipv4Path: string;
+    private readonly ipv6Path: string;
+    constructor(config: Config['plugin']) {
         this.config = config;
         this.ip2locationIPv4 = new IP2Location();
         this.ip2locationIPv6 = new IP2Location();
-        this.ipv4Path = path.join(__dirname, 'db', config.dbipv4);
-        this.ipv6Path = path.join(__dirname, 'db', config.dbipv6);
+        this.ipv4Path = path.join(__dirname, 'db', config!.dbipv4);
+        this.ipv6Path = path.join(__dirname, 'db', config!.dbipv6);
     }
 
     elaborate(log: Log): Promise<Log | null> {
@@ -53,17 +53,17 @@ export default class MyPlugin implements PipelinePluginI {
         if (!fs.existsSync(this.ipv4Path)) {
             fs.mkdirSync(path.dirname(this.ipv4Path), { recursive: true });
             await this.downloadDatabase(
-                this.config.dbDownloadUrl
-                    .replace('{DATABASE_CODE}', this.config.dbcode)
-                    .replace('{GEO_DBTOKEN}', this.config["geo-dbtoken"]),
+                this.config!.dbDownloadUrl
+                    .replace('{DATABASE_CODE}', this.config!.dbcode)
+                    .replace('{GEO_DBTOKEN}', this.config!.dbToken),
                 this.ipv4Path);
         }
 
         if (!fs.existsSync(this.ipv6Path)) {
             fs.mkdirSync(path.dirname(this.ipv6Path), { recursive: true });
-            await this.downloadDatabase(this.config.dbDownloadUrl
-                .replace('{DATABASE_CODE}', this.config.dbcodeipv6)
-                .replace('{GEO_DBTOKEN}', this.config["geo-dbtoken"]),
+            await this.downloadDatabase(this.config!.dbDownloadUrl
+                .replace('{DATABASE_CODE}', this.config!.dbcodeipv6)
+                .replace('{GEO_DBTOKEN}', this.config!.dbToken),
                 this.ipv6Path);
         }
         

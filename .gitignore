@@ -4,5 +4,6 @@ dist
 .vscode
 src/plugin/db/*
 !src/plugin/db/.gitkeep
-config/config.yml
+src/config/config.yml
 .idea
+.env

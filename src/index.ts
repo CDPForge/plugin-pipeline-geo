@@ -1,8 +1,9 @@
-import path from 'path';
 import MyPlugin from './Plugin';
-import { start, ConfigReader } from '@cdp-forge/plugin-pipeline-sdk';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const config = ConfigReader.generate(path.join(__dirname, '../config/config.yml'), path.join(__dirname, '../config/plugin.yml'));
-const plugin = new MyPlugin(config);
-
-start(plugin, config);
+import { start, clusterConfig  } from '@cdp-forge/plugin-pipeline-sdk';
+import pluginConfig from './config/plugin';
+console.log(clusterConfig);
+const plugin = new MyPlugin(pluginConfig);
+start(plugin, pluginConfig);

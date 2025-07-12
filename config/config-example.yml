@@ -1,7 +1,0 @@
-kafkaConfig:
-  brokers:
-    - 'localhost:36357'
-
-pluginManagerUrl: 'http://localhost:3000'
-config_topic: 'config'
-geo-dbtoken: [rplace_with_ur_token]
