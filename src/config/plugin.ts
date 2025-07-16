@@ -9,7 +9,7 @@ const config: Config['plugin'] = {
     dbDownloadUrl: 'https://www.ip2location.com/download/?token={GEO_DBTOKEN}&file={DATABASE_CODE}',
     dbcode: "DB11LITEBIN",
     dbcodeipv6: "DB11LITEBINIPV6",
-    dbToken: process.env.GEO_DBTOKEN,
+    dbToken: process.env.GEO_DBTOKEN
 }
 
 export default config;

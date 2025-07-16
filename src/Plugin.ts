@@ -28,6 +28,11 @@ export default class MyPlugin implements PipelinePluginI {
                 this.ip2locationIPv4.getAll(log.device.ip) :
                 this.ip2locationIPv6.getAll(log.device.ip);
 
+            if(lookup?.countryLong === 'INVALID_IP_ADDRESS') {
+                console.log(`Invalid IP address: ${log.device.ip}`);
+                return Promise.resolve(log);
+            }
+
             if (!log.geo) {
                 log.geo = {};
             }
